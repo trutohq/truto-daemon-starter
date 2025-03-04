@@ -7,8 +7,8 @@ EnvironmentFile=/app/.env
 ExecStart=/app/truto-daemon-linux-x64
 Restart=always
 RestartSec=5
-StandardOutput=syslog
-StandardError=syslog
+StandardOutput=journal
+StandardError=journal
 SyslogIdentifier=truto-daemon
 
 [Install]

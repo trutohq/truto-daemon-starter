@@ -2,15 +2,16 @@
 
 # Check if the correct number of arguments are provided
 if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <username> <server_ip>"
+    echo "Usage: $0 <username> <server_ip> <client_name>"
     exit 1
 fi
 
 USERNAME=$1
 SERVER_IP=$2
+CLIENT_NAME=$3
 BINARY_NAME="truto-daemon-linux-x64" # Replace with the actual binary name if different
 SERVICE_NAME="truto-daemon" # Replace with the actual service name if different
-ENV_FILE=".env"
+ENV_FILE=".env.$CLIENT_NAME"
 
 # Build the app
 bun run build-linux

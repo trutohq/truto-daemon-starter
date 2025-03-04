@@ -6,4 +6,4 @@ sqlite.db-wal
 .env
 .env.*
 !.env.example
-clonepartner-linux-x64
+truto-daemon-linux-x64
