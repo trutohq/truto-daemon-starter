@@ -7,3 +7,4 @@ sqlite.db-wal
 .env.*
 !.env.example
 truto-daemon-linux-x64
+truto-daemon-darwin-arm64
