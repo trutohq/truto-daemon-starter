@@ -1,0 +1,9 @@
+# deps
+node_modules/
+sqlite.db
+sqlite.db-shm
+sqlite.db-wal
+.env
+.env.*
+!.env.example
+clonepartner-linux-x64

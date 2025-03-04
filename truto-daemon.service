@@ -1,0 +1,15 @@
+[Unit]
+Description=Truto Daemon
+After=network.target
+
+[Service]
+EnvironmentFile=/app/.env
+ExecStart=/app/truto-daemon-linux-x64
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=truto-daemon
+
+[Install]
+WantedBy=multi-user.target
