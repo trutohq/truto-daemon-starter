@@ -45,7 +45,9 @@ class Commerce7SageintacctRefunds extends Job {
     log.setBindings({
       job: 'Commerce7SageintacctRefunds',
     })
-
+    await this.refreshIntegratedAccountCredentials(
+      this.daemonJobRun.args?.sage_integrated_account_id as string
+    )
     const commerce7IntegratedAccountId = this.daemonJobRun.args
       ?.commerce7_integrated_account_id as string
     const sageIntegratedAccountId = this.daemonJobRun.args

@@ -46,6 +46,9 @@ class Commerce7SageintacctOrders extends Job {
     log.setBindings({
       job: 'Commerce7SageintacctOrders',
     })
+    await this.refreshIntegratedAccountCredentials(
+      this.daemonJobRun.args?.sage_integrated_account_id as string
+    )
     const ordersPromise = await this.listFromSource<Commerce7Order>({
       resource: 'orders',
       integrated_account_id: this.daemonJobRun.args
@@ -206,7 +209,7 @@ class Commerce7SageintacctOrders extends Job {
 
           const sageintacctItemId = get(sageintacctItem, '[0].id')
           itemIds[sageintacctItemId] = {
-            price: parseInt((get(item, 'price') / 100).toFixed(2)),
+            price: parseInt(this.formatPrice(get(item, 'price'))),
             quantity: get(item, 'quantity'),
           }
           log.info(`Sage Intacct Item: ${sageintacctItemId}`)
@@ -278,13 +281,7 @@ class Commerce7SageintacctOrders extends Job {
         })
         if (pushOrder?.id) {
           try {
-            await this.sqlite
-              .insertInto('state')
-              .values({
-                key: `order_commerce7_${order.id}`,
-                value: pushOrder.id,
-              })
-              .execute()
+            await this.saveState(`order_commerce7_${order.id}`, pushOrder.id)
             log.info(`Order created : ${pushOrder.id}`)
             log.info(`Fetching Invoice Key: ${pushOrder.id}`)
             const sageintacctInvoiceId = await this.queryInDestination<

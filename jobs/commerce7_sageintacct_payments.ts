@@ -50,6 +50,9 @@ class Commerce7SageintacctPayments extends Job {
     log.setBindings({
       job: 'Commerce7SageintacctPayments',
     })
+    await this.refreshIntegratedAccountCredentials(
+      this.daemonJobRun.args?.sage_integrated_account_id as string
+    )
     const orders = await this.listFromSource<Commerce7Order>({
       resource: 'orders',
       integrated_account_id: this.daemonJobRun.args
